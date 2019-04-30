@@ -1,5 +1,5 @@
 // common array list validation to carry the validation
-validate = function(arg) {
+validate = function(arg){
 
 	var arrayerror = []; // collection of errors stored by this variable
 

@@ -11,7 +11,7 @@ $(document).ready(function(){
 	$("#back").prop('disabled', true); // initially disable the back button 
 
 	// loading the next limited list page from the service
-    $("#next").click(function() {
+    $("#next").click(function(){
 	   start = max;
 	   max = max + limit;
 	   $("#back").prop('disabled', false);
@@ -19,11 +19,11 @@ $(document).ready(function(){
     });
 
     // loading the back of the list page from the service
-    $("#back").click(function() {
+    $("#back").click(function(){
  	   max = start;
  	   start = start - limit;
  	   $("#next").prop('disabled', false);
- 	   if (start == 0 && max == limit) {
+ 	   if (start == 0 && max == limit){
  		   $("#back").prop('disabled', true);
  	   }
  	   dataList(start, max);
