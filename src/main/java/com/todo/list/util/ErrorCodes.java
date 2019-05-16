@@ -7,6 +7,7 @@ public enum ErrorCodes {
     ESTIMATION_ERROR (400, "estimation is empty"),
     STATUS_ERROR (400, "status is empty"),
     START_DATE_ERROR (400, "start should be present date"),
+    DATE_ERROR (400, "date not valid"),
     DUE_DATE_ERROR(400, "Due should be present date or above"),
     ID_ERROR(400, "id Filed is empty"),
     INTERNAL_SERVER_ERROR(500, "Server Error"),

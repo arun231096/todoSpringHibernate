@@ -1,7 +1,5 @@
 package com.todo.list.controller;
 
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.todo.list.model.ToDoList;
+import com.todo.list.service.MailService;
 import com.todo.list.service.ToDoListService;
+import com.todo.list.util.ToDoDateValidator;
 
 /**
  * @author Arunkumar Angappan
@@ -24,7 +24,15 @@ public class ToDoListController {
 	
 	private ToDoListService toDoService;
 	private ToDoList p;
+	private ToDoDateValidator validater;
+	
 
+	@Autowired(required=true)
+	@Qualifier(value="toDoValidator")
+	public void setToDoValidator(ToDoDateValidator validator) {
+		validater = validator;
+	}
+	
 	@Autowired(required=true) 
 	@Qualifier(value="toDoModel")
 	public void setToDoModel(ToDoList ps){
@@ -36,7 +44,7 @@ public class ToDoListController {
 	public void setToDoService(ToDoListService ps){
 		this.toDoService = ps;
 	}
-
+	
 	// Jsp loader for UI
 	@RequestMapping(value="/todo/{var}", method =  RequestMethod.GET)
 	public ModelAndView redirect(@PathVariable String var) {
@@ -72,8 +80,8 @@ public class ToDoListController {
 			@RequestParam String message,
 			@RequestParam int estimation,
 			@RequestParam String status,
-			@RequestParam Date startdate,
-			@RequestParam Date duedate
+			@RequestParam String startdate,
+			@RequestParam String duedate
 			){
 
 		p.setId(id);
@@ -83,6 +91,7 @@ public class ToDoListController {
 		p.setMessage(message);
 		p.setStartdate(startdate);
 		p.setStatus(status);
+		validater.dateValidation(p);
 		this.toDoService.addToDo(p);
 		return "redirect:/readAll";
 	}
@@ -95,8 +104,8 @@ public class ToDoListController {
 			@RequestParam String message,
 			@RequestParam int estimation,
 			@RequestParam String status,
-			@RequestParam Date startdate,
-			@RequestParam Date duedate
+			@RequestParam String startdate,
+			@RequestParam String duedate
 			){
 
 		p.setId(id);

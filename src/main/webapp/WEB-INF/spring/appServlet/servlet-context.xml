@@ -60,6 +60,8 @@
 	<beans:bean id="toDoService" class="com.todo.list.service.ToDoListServiceImpl">
 		<beans:property name="toDoDAO" ref="toDoDAO"></beans:property>
 	</beans:bean>
+	<beans:bean id="toDoValidator" class="com.todo.list.util.ToDoDateValidator">
+	</beans:bean>
 	<context:component-scan base-package="com.todo.list" />
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
@@ -79,4 +81,21 @@
         </beans:property>
     </beans:bean>
 
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="587" />
+		<beans:property name="username" value="arunak283933@gmail.com" />
+		<beans:property name="password" value="arun231096" />
+			
+		<beans:property name="javaMailProperties">
+		   <beans:props>
+	       	      <beans:prop key="mail.smtp.auth">true</beans:prop>
+	       	      <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+	       	   </beans:props>
+		</beans:property>
+	</beans:bean>
+		
+	<beans:bean id="mailService" class="com.todo.list.service.MailService">
+		<beans:property name="mailSender" ref="mailSender" />
+	</beans:bean>
 </beans:beans>
